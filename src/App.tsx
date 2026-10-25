@@ -1,9 +1,13 @@
 import "./App.css";
+import calcStage from "./utils/calcStage";
 
 function App() {
+  const number = calcStage(new Date());
+
   return (
     <>
-      <p>something</p>
+      <p>The Tower</p>
+      <p>Current stage: {number}</p>
     </>
   );
 }

@@ -9,7 +9,7 @@ function App() {
   return (
     <>
       <h1>The Tower</h1>
-      <h3>Current stage: {stage}</h3>{" "}
+      <h3>Current stage: {stage + 1}</h3>{" "}
       <button onClick={() => setStage(stage + 1)}>+</button>{" "}
       <button onClick={() => setStage(stage - 1)}>-</button>
       <p>Name: {getTowerLayout(stage)?.name}</p>

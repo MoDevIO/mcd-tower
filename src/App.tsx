@@ -1,6 +1,7 @@
 import "./App.css";
 import { useState } from "react";
 import calcStage from "./utils/calcStage";
+import { calcTimeUntilNextStage } from "./utils/calcStage";
 import getTowerLayout from "./utils/getTowerLayout";
 
 function App() {
@@ -12,6 +13,10 @@ function App() {
       <h3>Current stage: {stage}</h3>{" "}
       <button onClick={() => setStage(stage + 1)}>+</button>{" "}
       <button onClick={() => setStage(stage - 1)}>-</button>
+      <p>
+        Time until next stage: {calcTimeUntilNextStage(new Date())} day
+        {calcTimeUntilNextStage(new Date()) !== 1 ? "s" : ""}
+      </p>
       <p>Name: {getTowerLayout(stage)?.name}</p>
       <p>
         Boss count:{" "}

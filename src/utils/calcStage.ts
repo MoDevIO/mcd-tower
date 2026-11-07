@@ -12,7 +12,7 @@ function calcStage(date: Date): number {
 
   const weeks = Math.floor(daysDiff / 7);
 
-  const result = (((20 + weeks) % 29) + 29) % 29;
+  const result = ((((20 + weeks) % 29) + 29) % 29) + 2;
 
   return result;
 }

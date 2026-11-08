@@ -1,37 +1,29 @@
+const startDate = Date.UTC(2022, 11, 11);
+const numberOfStages = 30;
+
 function calcStage(date: Date): number {
-  const startDate: Date = new Date(2022, 10, 20);
-  const targetDate: Date = new Date(
+  const targetDate = Date.UTC(
     date.getFullYear(),
     date.getMonth(),
     date.getDate(),
   );
 
-  const daysDiff = Math.round(
-    (targetDate.getTime() - startDate.getTime()) / (24 * 60 * 60 * 1000),
-  );
+  const daysDiff = Math.floor((targetDate - startDate) / (1000 * 60 * 60 * 24));
+  const weeksDiff = Math.floor(daysDiff / 7);
 
-  const weeks = Math.floor(daysDiff / 7);
-
-  const result = ((((20 + weeks) % 29) + 29) % 29) + 2;
-
-  return result;
+  return ((weeksDiff + 1) % numberOfStages) + 1;
 }
 
 function calcTimeUntilNextStage(date: Date): number {
-  const startDate: Date = new Date(2022, 10, 20);
-  const targetDate: Date = new Date(
+  const targetDate = Date.UTC(
     date.getFullYear(),
     date.getMonth(),
     date.getDate(),
   );
 
-  const daysDiff = Math.round(
-    (targetDate.getTime() - startDate.getTime()) / (24 * 60 * 60 * 1000),
-  );
+  const daysDiff = Math.floor((targetDate - startDate) / (1000 * 60 * 60 * 24));
 
-  const result = daysDiff % 7 === 0 ? 0 : 7 - (daysDiff % 7);
-
-  return result;
+  return 7 - (daysDiff % 7);
 }
 export default calcStage;
 export { calcTimeUntilNextStage };

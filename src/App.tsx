@@ -5,14 +5,31 @@ import { calcTimeUntilNextStage } from "./utils/calcStage";
 import getTowerLayout from "./utils/getTowerLayout";
 
 function App() {
-  const [stage, setStage] = useState(calcStage(new Date()));
+  const [date, setDate] = useState(new Date());
+  const stage = calcStage(date);
 
   return (
     <>
       <h1>The Tower</h1>
-      <h3>Current stage: {stage}</h3>{" "}
-      <button onClick={() => setStage(stage + 1)}>+</button>{" "}
-      <button onClick={() => setStage(stage - 1)}>-</button>
+      <h3>Current stage: {stage}</h3> <h4>Date: {date.toDateString()}</h4>
+      <button
+        onClick={() => {
+          const nextWeek = new Date(date);
+          nextWeek.setDate(nextWeek.getDate() + 7);
+          setDate(nextWeek);
+        }}
+      >
+        +
+      </button>{" "}
+      <button
+        onClick={() => {
+          const prevWeek = new Date(date);
+          prevWeek.setDate(prevWeek.getDate() - 7);
+          setDate(prevWeek);
+        }}
+      >
+        -
+      </button>
       <p>
         Time until next stage: {calcTimeUntilNextStage(new Date())} day
         {calcTimeUntilNextStage(new Date()) !== 1 ? "s" : ""}
@@ -21,27 +38,26 @@ function App() {
       <p>
         Boss count:{" "}
         {
-          getTowerLayout(stage)?.stages.filter(
-            (stage) => stage.name === "Boss floor",
-          ).length
+          getTowerLayout(stage)?.stages.filter((stage) => stage.boss === true)
+            .length
         }
       </p>
       <p>
         Merchant count:{" "}
         {
           getTowerLayout(stage)?.stages.filter(
-            (stage) => stage.name === "Merchant floor",
+            (stage) => stage.merchant === true,
           ).length
         }
       </p>
       <p>-------</p>
       <p>Stages:</p>
-      <ul>
+      <ol start={0}>
         {getTowerLayout(stage)?.stages.map((stage, index) => (
           <li key={index}>
-            {stage.name === "Boss floor" ? (
+            {stage.boss === true ? (
               <strong>{stage.name}</strong>
-            ) : stage.name === "Merchant floor" ? (
+            ) : stage.merchant === true ? (
               <u>{stage.name}</u>
             ) : (
               stage.name
@@ -49,7 +65,7 @@ function App() {
             {stage.notes && ` - ${stage.notes}`}
           </li>
         ))}
-      </ul>
+      </ol>
     </>
   );
 }
